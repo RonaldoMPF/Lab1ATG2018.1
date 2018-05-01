@@ -28,6 +28,8 @@ public class Graph<T> {
 		
 		if (type.equals(Representation.AL)) {
 			result = generateAL();
+		} else if (type.equals(Representation.AM)) {
+			result = generateAM();
 		}
 		
 		return result;
@@ -46,6 +48,32 @@ public class Graph<T> {
 			result += (line + "\n");
 		}
 		
+		return result;
+	}
+
+	private String generateAM() {
+		String result = "";
+		String line = "  ";
+
+		for (int i = 1; i < vertices.size(); i++) {
+            line += String.format("%d ", i);
+        }
+        result += (line + "\n");
+
+        for (int i = 1; i < vertices.size(); i++) {
+            line = String.format("%d ", i);
+
+		    for (int j = 1; j < vertices.size(); j++){
+		        if (vertices.get(i).getConnections().contains(vertices.get(j))){
+                    line += "1 ";
+                } else {
+                    line += "0 ";
+                }
+            }
+
+            result += (line + "\n");
+        }
+
 		return result;
 	}
 		

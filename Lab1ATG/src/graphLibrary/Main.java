@@ -11,6 +11,7 @@ public class Main {
 		try {
 			Graph<Integer> graph = GraphReader.readGraph(basePath);
 			System.out.println(graph.graphRepresentation(Representation.AL));
+			System.out.println(graph.graphRepresentation(Representation.AM));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
