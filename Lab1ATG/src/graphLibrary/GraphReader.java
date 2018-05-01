@@ -22,14 +22,14 @@ public class GraphReader {
 			graph = new Graph<Integer>(maxVertices);
 			
 			int[] vertices = null;
-			while (line != null) {
+			while (true) {
 				line = br.readLine();
-
+				if (line == null)
+					break;
 				String[] aux = line.trim().split(" ");
 				
 				vertices = Arrays.stream(aux)
 						.mapToInt(Integer::parseInt).toArray();
-				System.out.println(Arrays.toString(vertices));
 				
 				if (vertices.length != 2) {
 					throw new IOException("Expected two vertices per edge");
