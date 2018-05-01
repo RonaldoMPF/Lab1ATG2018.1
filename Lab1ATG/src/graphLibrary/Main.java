@@ -12,6 +12,7 @@ public class Main {
 			Graph<Integer> graph = GraphReader.readGraph(basePath);
 			System.out.println(graph.graphRepresentation(Representation.AL));
 			System.out.println(graph.graphRepresentation(Representation.AM));
+            System.out.println(graph.getVertices());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
