@@ -1,58 +1,87 @@
 package graphLibrary;
 
-public class GraphManager implements Manager {
+import javax.swing.event.InternalFrameEvent;
+import java.util.*;
+import java.util.stream.Collectors;
 
-    @Override
+public class GraphManager {
+
     public void readGraph(String path) {
 
     }
 
-    @Override
     public void readWeightedGraph(String path) {
 
     }
 
-    @Override
     public int getVertexNumber(Graph graph) {
         return 0;
     }
 
-    @Override
     public int getEdgeNumber(Graph graph) {
         return 0;
     }
 
-    @Override
     public float getMeanEdge(Graph graph) {
         return 0;
     }
 
-    @Override
     public String graphRepresentation(Graph graph, String type) {
         return null;
     }
 
-    @Override
-    public String bfs(Graph graph, Vertex v) {
-        return null;
+
+    /**
+     *Implements a Breadth-First Search in graph starting in vertex v
+     *
+     * @param graph
+     * @param v
+     * @return String with a BFS Tree
+     */
+    public static String bfs(Graph graph, Vertex v) {
+        Map<Vertex, Integer> visited = new HashMap<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Set<Vertex> completed = new HashSet<>();
+        String result = "";
+
+        ((LinkedList<Vertex>) queue).addFirst(v);
+
+        Integer level = 0;
+
+        while (! queue.isEmpty()){
+            Vertex head = ((LinkedList<Vertex>) queue).removeFirst();
+            if (! visited.containsKey(head)){
+                result += head.getData()+" -- "+ level+"\n";
+            }
+            visited.putIfAbsent(head, level);
+
+            for (Vertex adj : graph.getAdjVertices(head)){
+                if (!visited.containsKey(adj)){
+                    result += adj.getData()+" - "+(visited.get(head)+1)+" "+head.getData()+"\n";
+                }
+                visited.putIfAbsent(adj, visited.get(head) + 1);
+                if (!completed.contains(adj)) {
+                    ((LinkedList<Vertex>) queue).addFirst(adj);
+                }
+            }
+            completed.add(head);
+        }
+
+        return result;
     }
 
-    @Override
     public String dfs(Graph graph, Vertex v) {
         return null;
     }
 
-    @Override
     public String scc(Graph graph) {
         return null;
     }
 
-    @Override
     public String shortestPath(Vertex v1, Vertex v2) {
         return null;
     }
 
-    @Override
     public String mst(Graph graph) {
         return null;
     }

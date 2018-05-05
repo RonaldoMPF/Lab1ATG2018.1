@@ -16,6 +16,8 @@ public class Graph {
 
 	public Set<Vertex<Integer>> getVertices() { return vertices; }
 
+	public Set<Vertex> getAdjVertices(Vertex v) { return adjVertices.get(v); }
+
 	public Set<Edge> getEdges() { return edges; }
 
 	public boolean addVertex(Vertex vertex) {
