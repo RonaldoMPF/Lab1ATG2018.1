@@ -6,6 +6,12 @@ import java.util.stream.Collectors;
 
 public class GraphManager {
 
+    Graph graph;
+
+    public GraphManager(){
+
+    }
+
     public void readGraph(String path) {
 
     }
@@ -15,11 +21,11 @@ public class GraphManager {
     }
 
     public int getVertexNumber(Graph graph) {
-        return 0;
+        return graph.getVertices().size();
     }
 
     public int getEdgeNumber(Graph graph) {
-        return 0;
+        return graph.getEdges().size();
     }
 
     public float getMeanEdge(Graph graph) {
@@ -27,6 +33,11 @@ public class GraphManager {
     }
 
     public String graphRepresentation(Graph graph, String type) {
+        if (type.equals("AM")) {
+            return graph.graphRepresentation(Representation.AM);
+        } else if (type.equals("AL")){
+            return graph.graphRepresentation(Representation.AL);
+        }
         return null;
     }
 
