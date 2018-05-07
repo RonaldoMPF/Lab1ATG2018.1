@@ -81,8 +81,37 @@ public class GraphManager {
         return result;
     }
 
-    public String dfs(Graph graph, Vertex v) {
-        return null;
+    public static String dfs(Graph graph, Vertex v) {
+        Integer level = 0;
+        String result = "";
+
+        v.setVisited(true);
+        result += v.getData()+" -- "+level+"\n";
+        level++;
+
+        for (Vertex vertex : graph.getAdjVertices(v)){
+            if (vertex.getVisited() == false){
+                result += dfsUtil(graph, vertex, level+1);
+            }
+        }
+
+        return result;
+    }
+
+    private static String dfsUtil(Graph g, Vertex v, Integer l){
+        String result = "";
+        Integer level = l;
+
+        v.setVisited(true);
+        result += v.getData()+" - "+level+" "+v.getData()+"\n";
+        level++;
+
+        for (Vertex vertex : g.getAdjVertices(v)){
+            if (vertex.getVisited() == false){
+                result += dfsUtil(g, vertex, level+1);
+            }
+        }
+        return result;
     }
 
     public String scc(Graph graph) {

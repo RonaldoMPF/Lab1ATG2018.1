@@ -15,6 +15,7 @@ public class Main {
 			System.out.println(graph.graphRepresentation(Representation.AM));
             System.out.println(graph.getVertices());
 			System.out.println(GraphManager.bfs(graph, new Vertex(1)));
+			System.out.println(GraphManager.dfs(graph, new Vertex(1)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,6 +35,7 @@ public class Main {
 		graph2.addEdge(new Edge(v1, v3));
 		graph2.addEdge(new Edge(v2, v4));
 		System.out.println(GraphManager.bfs(graph2, v1));
+		System.out.println(GraphManager.dfs(graph2, v1));
 
 //		System.out.println(graph2.graphRepresentation(Representation.AL));
 	}

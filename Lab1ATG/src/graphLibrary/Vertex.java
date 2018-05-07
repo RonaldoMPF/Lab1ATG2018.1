@@ -14,9 +14,11 @@ import java.util.List;
  */
 public class Vertex<T> {
 	private T data;
+	private boolean visited; // Variable used for generate BFS and DFS
 
 	public Vertex(T data) {
 		this.data = data;
+		this.visited = false;
 	}
 
 	public Vertex() {
@@ -30,6 +32,10 @@ public class Vertex<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
+
+	public boolean getVisited() { return visited; }
+
+	public void setVisited(boolean status) { this.visited = status;	}
 
 	@Override
 	public int hashCode() {
