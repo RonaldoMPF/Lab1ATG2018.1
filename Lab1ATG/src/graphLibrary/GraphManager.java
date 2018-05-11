@@ -21,15 +21,15 @@ public class GraphManager {
     }
 
     public int getVertexNumber(Graph graph) {
-        return graph.getVertices().size();
+        return graph.getVertexNumber();
     }
 
     public int getEdgeNumber(Graph graph) {
-        return graph.getEdges().size();
+        return graph.getEdgeNumber();
     }
 
     public float getMeanEdge(Graph graph) {
-        return 0;
+        return graph.getMeanEdge();
     }
 
     public String graphRepresentation(Graph graph, String type) {

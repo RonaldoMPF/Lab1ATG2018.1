@@ -7,11 +7,13 @@ public class Graph {
 	private Set<Vertex<Integer>> vertices;
 	private Set<Edge> edges;
 	private Map<Vertex, Set<Vertex>> adjVertices;
+	private boolean isWeighted;
 
 	public Graph() {
 		vertices = new HashSet<>();
 		edges = new HashSet<>();
 		adjVertices = new HashMap<>();
+		isWeighted = false;
 	}
 
 	public Vertex getVertex(Integer data){
@@ -21,6 +23,10 @@ public class Graph {
 			}
 		}
 		return null;
+	}
+
+	public boolean isWeighted() {
+		return isWeighted;
 	}
 
 	public void setVisitedVertex (Vertex vertex, boolean status){
@@ -37,6 +43,20 @@ public class Graph {
 
 	public Set<Edge> getEdges() { return edges; }
 
+	public int getVertexNumber() {
+		return getVertices().size();
+	}
+
+	public int getEdgeNumber() {
+
+		return getEdges().size();
+	}
+
+	public float getMeanEdge() {
+		return (2 * getEdgeNumber()) / getVertexNumber();
+	}
+
+
 	public boolean addVertex(Vertex vertex) {
 		return vertices.add(vertex);
 	}
@@ -44,6 +64,9 @@ public class Graph {
 
 	public boolean addEdge(Edge edge) {
 		if (edges.add(edge)) {
+			if(edge.getWeight() != 1){
+				isWeighted = true;
+			}
 
 			Vertex v1 = edge.getFirstVertice();
 			Vertex v2 = edge.getSecondVertice();
@@ -79,16 +102,33 @@ public class Graph {
 	private String generateAL() {
 		String result = "";
 
-		for (Vertex v1 : vertices) {
-			String line = String.format("%d -", v1.getData());
+		if (isWeighted()) {
+			for (Vertex v : vertices) {
+				String line = String.format("%d -", v.getData());
 
-			for (Vertex v2 : adjVertices.get(v1)) {
-				line += (" " + v2.getData());
+				for (Edge edge : edges) {
+					if (edge.getFirstVertice().equals(v)) {
+						line += (" " + edge.getSecondVertice().getData() + "(" + edge.getWeight() + ")");
+					}
+					if (edge.getSecondVertice().equals(v)) {
+						line += (" " + edge.getFirstVertice().getData() + "(" + edge.getWeight() + ")");
+					}
+
+				}
+
+				result += (line + "\n");
 			}
+		}else {
+			for (Vertex v1 : vertices) {
+				String line = String.format("%d -", v1.getData());
 
-			result += (line + "\n");
+				for (Vertex v2 : adjVertices.get(v1)) {
+					line += (" " + v2.getData());
+				}
+
+				result += (line + "\n");
+			}
 		}
-
 		return result;
 	}
 
@@ -100,25 +140,29 @@ public class Graph {
 		String result = "";
 		String line = "  ";
 
-		for (Vertex v: vertices) {
-			line += String.format("%d ", v.getData());
-		}
-		result += (line + "\n");
+		if (isWeighted()){
 
-		for (Vertex v1: vertices) {
-			line = String.format("%d ", v1.getData());
+		}else {
 
-			for (Vertex v2: vertices){
-				if (adjVertices.get(v1).contains(v2)){
-					line += "1 ";
-				} else {
-					line += "0 ";
-				}
+			for (Vertex v : vertices) {
+				line += String.format("%d ", v.getData());
 			}
-
 			result += (line + "\n");
-		}
 
+			for (Vertex v1 : vertices) {
+				line = String.format("%d ", v1.getData());
+
+				for (Vertex v2 : vertices) {
+					if (adjVertices.get(v1).contains(v2)) {
+						line += "1 ";
+					} else {
+						line += "0 ";
+					}
+				}
+
+				result += (line + "\n");
+			}
+		}
 		return result;
 	}
 
@@ -135,6 +179,7 @@ public class Graph {
 		String result = "";
 
 		setVisitedVertex(v, true);
+		result += v.getData()+" - "+level+" "+" -\n";
 
 		for(Vertex vertex: getAdjVertices(v)){
 			if (!getVertex((Integer) vertex.getData()).getVisited()){
@@ -209,4 +254,5 @@ public class Graph {
 
 		return result;
 	}
+
 }
