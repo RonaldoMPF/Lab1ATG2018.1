@@ -11,11 +11,12 @@ public class Main {
 
 		try {
 			graph = GraphReader.readGraph(basePath);
-			System.out.println(graph.graphRepresentation(Representation.AL));
-			System.out.println(graph.graphRepresentation(Representation.AM));
-            System.out.println(graph.getVertices());
-			System.out.println(GraphManager.bfs(graph, new Vertex(1)));
-			System.out.println(GraphManager.dfs(graph, new Vertex(1)));
+			Vertex v = graph.getVertices().iterator().next();
+//			System.out.println(graph.graphRepresentation(Representation.AL));
+//			System.out.println(graph.graphRepresentation(Representation.AM));
+//            System.out.println(graph.getVertices());
+			System.out.println(graph.bfs(v));
+//			System.out.println(GraphManager.dfs(graph, v));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,9 +35,9 @@ public class Main {
 		graph2.addEdge(new Edge(v1, v2));
 		graph2.addEdge(new Edge(v1, v3));
 		graph2.addEdge(new Edge(v2, v4));
-		System.out.println(GraphManager.bfs(graph2, v1));
-		System.out.println(GraphManager.dfs(graph2, v1));
-
+		System.out.println(graph2.bfs(v1));
+//		System.out.println(GraphManager.dfs(graph2, v1));
+//
 //		System.out.println(graph2.graphRepresentation(Representation.AL));
 	}
 

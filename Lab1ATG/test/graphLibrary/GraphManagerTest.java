@@ -48,7 +48,7 @@ public class GraphManagerTest {
                 "3 - 1 1\n" +
                 "4 - 2 2\n";
 
-        Assert.assertEquals(GraphManager.bfs(graph1, new Vertex(1)), outputGraph1V1);
-        Assert.assertEquals(GraphManager.bfs(graph2, new Vertex(1)), outputGraph2V1);
+        Assert.assertEquals(graph1.bfs(new Vertex(1)), outputGraph1V1);
+        Assert.assertEquals(graph2.bfs(new Vertex(1)), outputGraph2V1);
     }
 }

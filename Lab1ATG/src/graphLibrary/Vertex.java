@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Vertex<T> {
 	private T data;
-	private boolean visited; // Variable used for generate BFS and DFS
+	private boolean visited; // Variable used for generate DFS
 
 	public Vertex(T data) {
 		this.data = data;
