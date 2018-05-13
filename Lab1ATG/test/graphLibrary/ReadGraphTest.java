@@ -1,15 +1,18 @@
-package graphLibrary;
+
+
+import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
+import graphLibrary.Edge;
+import graphLibrary.Graph;
+import graphLibrary.GraphReader;
+import graphLibrary.Vertex;
 
-import static org.junit.Assert.*;
-
-public class GraphManagerTest {
+public class ReadGraphTest {
     String basePath = new File("src/graphLibrary/data.txt").getAbsolutePath();
     Graph graph1;
     Graph graph2;

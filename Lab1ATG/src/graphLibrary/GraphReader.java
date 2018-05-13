@@ -22,6 +22,7 @@ public class GraphReader {
 			graph = new Graph();
 
 			int[] vertices = null;
+			
 			while (true) {
 				line = br.readLine();
 				if (line == null)
@@ -37,8 +38,10 @@ public class GraphReader {
 
 				Vertex<Integer> v1 = new Vertex(vertices[0]);
 				Vertex<Integer> v2 = new Vertex(vertices[1]);
+				
 				graph.addVertex(v1);
 				graph.addVertex(v2);
+				
 				Edge edge = new Edge(v1, v2);
 				graph.addEdge(edge);
 			}

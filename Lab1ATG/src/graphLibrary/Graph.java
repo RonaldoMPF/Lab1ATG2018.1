@@ -24,6 +24,10 @@ public class Graph {
 		}
 		return null;
 	}
+	
+	public void setVertices(Set<Vertex<Integer>> vertices) {
+		this.vertices = vertices;
+	}
 
 	public boolean isWeighted() {
 		return isWeighted;
@@ -52,6 +56,7 @@ public class Graph {
 		return getEdges().size();
 	}
 
+	
 	public float getMeanEdge() {
 		return (2 * getEdgeNumber()) / getVertexNumber();
 	}
