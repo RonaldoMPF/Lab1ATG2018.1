@@ -17,11 +17,10 @@ public class GraphReader {
 
 			String line = br.readLine();
 
-			int maxVertices = Integer.parseInt(line);
-
-			graph = new Graph();
+			graph = new Graph(Integer.parseInt(line.trim()));
 
 			int[] vertices = null;
+			
 			while (true) {
 				line = br.readLine();
 				if (line == null)
@@ -35,12 +34,19 @@ public class GraphReader {
 					throw new IOException("Expected two vertices per edge");
 				}
 
-				Vertex<Integer> v1 = new Vertex(vertices[0]);
-				Vertex<Integer> v2 = new Vertex(vertices[1]);
+				Vertex<Integer> v1 = new Vertex<Integer>(vertices[0]);
+				Vertex<Integer> v2 = new Vertex<Integer>(vertices[1]);
+				
+				graph.setWeight(v1, v2, 1f);
+				
 				graph.addVertex(v1);
 				graph.addVertex(v2);
-				Edge edge = new Edge(v1, v2);
-				graph.addEdge(edge);
+				
+				Edge edge1 = new Edge(v1, v2);
+				Edge edge2 = new Edge(v2, v1);
+				
+				graph.addEdge(edge1);
+				graph.addEdge(edge2);
 			}
 
 

@@ -1,28 +1,68 @@
 package graphLibrary;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
 
 public class Graph {
+	
+	public static final int DEFAULT_NUMBER_OF_VERTICES = 10;
 
 	private Set<Vertex<Integer>> vertices;
+	private float[][] matrix;
 	private Set<Edge> edges;
-	private Map<Vertex, Set<Vertex>> adjVertices;
+	private Map<Vertex<Integer>, Set<Vertex<Integer>>> adjVertices;
 	private boolean isWeighted;
 
 	public Graph() {
-		vertices = new HashSet<>();
+		this(Graph.DEFAULT_NUMBER_OF_VERTICES);
+	}
+	
+	public Graph(int numberOfVertices) {
+		vertices = new HashSet<>(numberOfVertices);
+		matrix = new float[numberOfVertices + 1][numberOfVertices + 1];
+
+		for(int i = 1; i <= numberOfVertices; i++) {
+			vertices.add(new Vertex<Integer>(i));
+			
+			for(int j = 1; j <= numberOfVertices; j++) {
+				if(i != j) {
+					matrix[i][j] = Float.MAX_VALUE;					
+				} else {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+		
 		edges = new HashSet<>();
 		adjVertices = new HashMap<>();
 		isWeighted = false;
+		
+		
 	}
 
 	public Vertex getVertex(Integer data){
+		
+		if(data == null) {
+			return null;
+		}
+		
 		for (Vertex v : vertices){
 			if(v.getData().equals(data)){
 				return v;
 			}
 		}
+		
 		return null;
+	}
+	
+	public void setVertices(Set<Vertex<Integer>> vertices) {
+		this.vertices = vertices;
 	}
 
 	public boolean isWeighted() {
@@ -39,12 +79,21 @@ public class Graph {
 
 	public Set<Vertex<Integer>> getVertices() { return vertices; }
 
-	public Set<Vertex> getAdjVertices(Vertex v) { return adjVertices.get(v); }
+	public Set<Vertex<Integer>> getAdjVertices(Vertex<Integer> v) { return adjVertices.get(v); }
 
 	public Set<Edge> getEdges() { return edges; }
 
 	public int getVertexNumber() {
 		return getVertices().size();
+	}
+	
+	public float[][] getMatrix() {
+		return matrix;
+	}
+	
+	public void setWeight(Vertex<Integer> u, Vertex<Integer> v, float weight) {
+		matrix[u.getData()][v.getData()] = weight;
+		matrix[v.getData()][u.getData()] = weight;
 	}
 
 	public int getEdgeNumber() {
@@ -52,18 +101,29 @@ public class Graph {
 		return getEdges().size();
 	}
 
+	
 	public float getMeanEdge() {
 		return (2 * getEdgeNumber()) / getVertexNumber();
 	}
 
 
 	public boolean addVertex(Vertex vertex) {
-		return vertices.add(vertex);
+		
+		if(vertex == null) {
+			return false;
+		}else {
+			return vertices.add(vertex);
+		}
+		
 	}
 
 
 	public boolean addEdge(Edge edge) {
-		if (edges.add(edge)) {
+		if(edge == null) {
+			return false;
+		
+		} else if (edges.add(edge)) {
+			
 			if(edge.getWeight() != 1){
 				isWeighted = true;
 			}
@@ -77,11 +137,45 @@ public class Graph {
 			adjVertices.get(v1).add(v2);
 			adjVertices.get(v2).add(v1);
 			return true;
-		}
-		return false;
+		}else {
+			return false;
+		}	
 
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((edges == null) ? 0 : edges.hashCode());
+		result = prime * result + (isWeighted ? 1231 : 1237);
+		result = prime * result + ((vertices == null) ? 0 : vertices.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Graph other = (Graph) obj;
+		if (edges == null) {
+			if (other.edges != null)
+				return false;
+		} else if (!edges.equals(other.edges))
+			return false;
+		if (isWeighted != other.isWeighted)
+			return false;
+		if (vertices == null) {
+			if (other.vertices != null)
+				return false;
+		} else if (!vertices.equals(other.vertices))
+			return false;
+		return true;
+	}
 
 	public String graphRepresentation(Representation type) {
 		String result = null;
@@ -174,20 +268,20 @@ public class Graph {
 	 * @return String, where each line is
 	 * 	 * the "data - level parent" of a vertex
 	 */
-	public String dfs(Vertex v) {
+	public String dfs(Vertex<Integer> v) {
 		Integer level = 0;
 		String result = "";
 
 		setVisitedVertex(v, true);
 		result += v.getData()+" - "+level+" "+" -\n";
 
-		for(Vertex vertex: getAdjVertices(v)){
+		for(Vertex<Integer> vertex: getAdjVertices(v)){
 			if (!getVertex((Integer) vertex.getData()).getVisited()){
 				result += dfsUtil(vertex, level, v);
 			}
 		}
 
-		for (Vertex vertex : vertices){
+		for (Vertex<Integer> vertex : vertices){
 			setVisitedVertex(vertex, false);
 		}
 		return result;
@@ -201,7 +295,7 @@ public class Graph {
 	 * @param parent the parent of the v vertex
 	 * @return Part of the complete DFS
 	 */
-	private String dfsUtil(Vertex v, Integer l, Vertex parent){
+	private String dfsUtil(Vertex<Integer> v, Integer l, Vertex<Integer> parent){
 		String result = "";
 		Integer level = l;
 
@@ -209,7 +303,7 @@ public class Graph {
 		result += v.getData()+" - "+level+" "+parent.getData()+"\n";
 		level++;
 
-		for(Vertex vertex: getAdjVertices(v)){
+		for(Vertex<Integer> vertex: getAdjVertices(v)){
 			if (!getVertex((Integer) vertex.getData()).getVisited()){
 				result += dfsUtil(vertex, level, v);
 			}
@@ -223,35 +317,81 @@ public class Graph {
 	 * @return String, where each line is
 	 * the "data - level parent" of a vertex
 	 */
-	public String bfs(Vertex vertex){
-		Map<Vertex, Integer> visited = new HashMap<>();
-		Queue<Vertex> queue = new LinkedList<>();
-		Set<Vertex> completed = new HashSet<>();
+	public String bfs(Vertex<Integer> vertex){
+		Map<Vertex<Integer>, Integer> visited = new HashMap<>();
+		Queue<Vertex<Integer>> queue = new LinkedList<>();
+		Set<Vertex<Integer>> completed = new HashSet<>();
 		String result = "";
 
-		((LinkedList<Vertex>) queue).addFirst(vertex);
+		((LinkedList<Vertex<Integer>>) queue).addFirst(vertex);
 
 		Integer level = 0;
 
 		while (! queue.isEmpty()){
-			Vertex head = ((LinkedList<Vertex>) queue).removeFirst();
+			Vertex<Integer> head = ((LinkedList<Vertex<Integer>>) queue).removeFirst();
 			if (! visited.containsKey(head)){
 				result += head.getData()+" - "+ level+" -\n";
 			}
 			visited.putIfAbsent(head, level);
 
-			for (Vertex adj : getAdjVertices(head)){
+			for (Vertex<Integer> adj : getAdjVertices(head)){
 				if (!visited.containsKey(adj)){
 					result += adj.getData()+" - "+(visited.get(head)+1)+" "+head.getData()+"\n";
 				}
 				visited.putIfAbsent(adj, visited.get(head) + 1);
 				if (!completed.contains(adj)) {
-					((LinkedList<Vertex>) queue).addFirst(adj);
+					((LinkedList<Vertex<Integer>>) queue).addFirst(adj);
 				}
 			}
 			completed.add(head);
 		}
 
+		return result;
+	}
+	
+	public String shortestPath(Vertex<Integer> origin, Vertex<Integer> destiny) {
+		
+		float[] dist = new float[vertices.size() + 1];
+		int[] parent = new int[vertices.size() + 1];
+		Queue<Vertex<Integer>> fifo = new LinkedList<Vertex<Integer>>();
+		
+		fifo.add(origin);
+
+		for(int i = 0; i < dist.length; i++) {
+			dist[i] = Float.MAX_VALUE;
+			parent[i] = i;
+		}
+		
+		dist[origin.getData()] = 0f;
+		
+		while(!fifo.isEmpty()) {
+			Vertex<Integer> u = fifo.poll();
+
+			for (Vertex<Integer> v : getAdjVertices(u)) {
+				if (dist[v.getData()] == Float.MAX_VALUE
+						|| dist[u.getData()] + matrix[u.getData()][v.getData()] < dist[v.getData()]) {
+			
+					dist[v.getData()] = dist[u.getData()] + matrix[u.getData()][v.getData()];
+					parent[v.getData()] = u.getData();
+					fifo.add(v);
+				}
+			}
+		}
+		
+
+		String result = "";
+		
+		Stack<Integer> s = new Stack<Integer>();
+		int curNode = destiny.getData();
+		while(parent[curNode] != curNode) {
+			s.add(curNode);
+			curNode = parent[curNode];
+		}
+		s.add(curNode);
+		while(!s.isEmpty()) {
+			result += s.pop().toString() + " ";
+		}
+		
 		return result;
 	}
 
