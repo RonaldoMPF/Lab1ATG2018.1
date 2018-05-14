@@ -17,8 +17,6 @@ public class GraphReader {
 
 			String line = br.readLine();
 
-			int maxVertices = Integer.parseInt(line);
-
 			graph = new Graph();
 
 			int[] vertices = null;
@@ -42,8 +40,11 @@ public class GraphReader {
 				graph.addVertex(v1);
 				graph.addVertex(v2);
 				
-				Edge edge = new Edge(v1, v2);
-				graph.addEdge(edge);
+				Edge edge1 = new Edge(v1, v2);
+				Edge edge2 = new Edge(v2, v1);
+				
+				graph.addEdge(edge1);
+				graph.addEdge(edge2);
 			}
 
 

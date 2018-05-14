@@ -20,7 +20,6 @@ public class GraphTest {
     Vertex<Integer> v3;
     Vertex<Integer> v4;
     Vertex<Integer> v5;
-    Vertex<Integer> vnull;
     
     Edge edge12;
     Edge edge21;
@@ -51,7 +50,6 @@ public class GraphTest {
         v4 = new Vertex<Integer>(4);
         v5 = new Vertex<Integer>(5);
         
-        vnull = new Vertex<Integer>(null);
         obj = new Object();
         
         edge12 = new Edge(v1, v2);
@@ -66,7 +64,7 @@ public class GraphTest {
         edge35 = new Edge(v3, v5);
         edge53 = new Edge(v5, v3);
         
-        edge54 = new Edge(v3, v4);
+        edge54 = new Edge(v5, v4);
         edge45 = new Edge(v4, v5);
         
         
@@ -92,25 +90,37 @@ public class GraphTest {
         testGraph.addEdge(edge53);
         
         testGraph.addEdge(edge45);
-        testGraph.addEdge(edge45);
+        testGraph.addEdge(edge54);
         
         
                    
     }
     
     @Test
-    public void TestEqualVertex() {
+    public void TestVertex() {
     	assertNotEquals(v1, v2);
-    	assertNotEquals(v3, vnull);
     	assertNotEquals(obj, v1);
-    	assertNotEquals(v2, null);
-    	assertNotEquals(v3, new Vertex<Integer>());
+    	assertNotEquals(v2, new Vertex<>(null));
+    	assertNotEquals(v3, new Vertex<>());
     	assertNotEquals(v1, obj);
+    	assertEquals(v1, new Vertex<>(1));
+    	
     	
     }
     
     @Test
-    public void TestEqualMembers() {
+    public void TestEdge() {
+    	assertNotEquals(edge12, edge21);
+    	assertNotEquals(edge15, edge21);
+    	assertNotEquals(edge12, null);
+    	assertNotEquals(edge12, new Edge(null, null));
+    	assertNotEquals(edge12, obj);
+    	assertEquals(edge12, new Edge(v1, v2));
+    }
+    
+    
+    @Test
+    public void TestEqualMembersVertex() {
     	
     	Set<Vertex> testSetVertex = new HashSet<Vertex>();
     	
@@ -120,8 +130,60 @@ public class GraphTest {
     	testSetVertex.add(v4);
     	testSetVertex.add(v5);
     	
+    	testGraph.addVertex(null);
+    	testGraph.addVertex(v5);
+    	testGraph.addVertex(v4);
+    	
     	assertEquals(testGraph.getVertices(), testSetVertex);
+    	assertEquals(new Graph().getVertices(), new HashSet<>());
+    	
+    	assertEquals(testGraph.getVertexNumber(), 5);
+    	assertEquals(new Graph().getVertexNumber(), 0);
+         
     }
+    
+    @Test
+	public void testEqualMembersEdge(){
+		
+		Set<Edge> testSetEdges = new HashSet<Edge>();
+		
+		testSetEdges.add(edge12);
+    	testSetEdges.add(edge21);
+         
+        testSetEdges.add(edge15);
+        testSetEdges.add(edge51);
+         
+        testSetEdges.add(edge25);
+        testSetEdges.add(edge52);
+         
+        testSetEdges.add(edge35);
+        testSetEdges.add(edge53);
+         
+        testSetEdges.add(edge45);
+        testSetEdges.add(edge54);
+        
+        testGraph.addEdge(null);
+        testGraph.addEdge(edge45);
+        testGraph.addEdge(edge54);
+        
+        assertEquals(testGraph.getEdges(), testSetEdges);
+        assertEquals(new Graph().getEdges(), new HashSet<>());
+        assertEquals(testGraph.getEdgeNumber(), 10);
+        
+        assertEquals(false, testGraph.isWeighted());
+        
+        
+	}
+    @Test
+    public void testGetVertex() {
+    	Integer notInTestGraph = new Integer(20);
+    	
+    	assertEquals(testGraph.getVertex(1), v1);
+    	assertEquals(testGraph.getVertex(null), null);
+    	assertEquals(testGraph.getVertex(notInTestGraph), null);
+    	
+    }
+    
     
 
 

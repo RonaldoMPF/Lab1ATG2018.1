@@ -1,6 +1,11 @@
 package graphLibrary;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class Graph {
 
@@ -17,11 +22,17 @@ public class Graph {
 	}
 
 	public Vertex getVertex(Integer data){
+		
+		if(data == null) {
+			return null;
+		}
+		
 		for (Vertex v : vertices){
 			if(v.getData().equals(data)){
 				return v;
 			}
 		}
+		
 		return null;
 	}
 	
@@ -63,12 +74,22 @@ public class Graph {
 
 
 	public boolean addVertex(Vertex vertex) {
-		return vertices.add(vertex);
+		
+		if(vertex == null) {
+			return false;
+		}else {
+			return vertices.add(vertex);
+		}
+		
 	}
 
 
 	public boolean addEdge(Edge edge) {
-		if (edges.add(edge)) {
+		if(edge == null) {
+			return false;
+		
+		} else if (edges.add(edge)) {
+			
 			if(edge.getWeight() != 1){
 				isWeighted = true;
 			}
@@ -82,11 +103,49 @@ public class Graph {
 			adjVertices.get(v1).add(v2);
 			adjVertices.get(v2).add(v1);
 			return true;
-		}
-		return false;
+		}else {
+			return false;
+		}	
 
 	}
 
+	
+
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((edges == null) ? 0 : edges.hashCode());
+		result = prime * result + (isWeighted ? 1231 : 1237);
+		result = prime * result + ((vertices == null) ? 0 : vertices.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Graph other = (Graph) obj;
+		if (edges == null) {
+			if (other.edges != null)
+				return false;
+		} else if (!edges.equals(other.edges))
+			return false;
+		if (isWeighted != other.isWeighted)
+			return false;
+		if (vertices == null) {
+			if (other.vertices != null)
+				return false;
+		} else if (!vertices.equals(other.vertices))
+			return false;
+		return true;
+	}
 
 	public String graphRepresentation(Representation type) {
 		String result = null;
