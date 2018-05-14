@@ -8,6 +8,8 @@ import java.util.Queue;
 import java.util.Set;
 
 public class Graph {
+	
+	public static final int DEFAULT_NUMBER_OF_VERTICES = 10;
 
 	private Set<Vertex<Integer>> vertices;
 	private Set<Edge> edges;
@@ -15,10 +17,18 @@ public class Graph {
 	private boolean isWeighted;
 
 	public Graph() {
-		vertices = new HashSet<>();
+		this(Graph.DEFAULT_NUMBER_OF_VERTICES);
+	}
+	
+	public Graph(int numberOfVertices) {
+		vertices = new HashSet<>(numberOfVertices);
+		for(int i = 1; i <= numberOfVertices; i++) {
+			vertices.add(new Vertex<Integer>(i));			
+		}
 		edges = new HashSet<>();
 		adjVertices = new HashMap<>();
 		isWeighted = false;
+		
 	}
 
 	public Vertex getVertex(Integer data){
@@ -108,10 +118,6 @@ public class Graph {
 		}	
 
 	}
-
-	
-
-	
 
 	@Override
 	public int hashCode() {
@@ -316,6 +322,22 @@ public class Graph {
 			completed.add(head);
 		}
 
+		return result;
+	}
+	
+	public String shortestPath(Vertex<Integer> origin) {
+		String result = origin.getData().toString();
+		
+		Integer[] dist = new Integer[vertices.size()];
+		Boolean[] isInPath = new Boolean[vertices.size()];
+		
+		for(int i = 0; i < dist.length; i++) {
+			dist[i] = Integer.MAX_VALUE;
+		}
+		
+		
+		
+		
 		return result;
 	}
 
