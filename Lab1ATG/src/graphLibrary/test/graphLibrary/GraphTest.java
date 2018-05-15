@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import graphLibrary.Edge;
 import graphLibrary.Graph;
+import graphLibrary.GraphManager;
 import graphLibrary.Vertex;
 
 public class GraphTest {
@@ -202,6 +203,28 @@ public class GraphTest {
 		graph2.addEdge(new Edge(v2, v4));
 		graph2.setWeight(v2, v4, 3f);
     	assertEquals(graph2.shortestPath(v1, v2) , "1 2 ");
+    	
+    }
+    
+    @Test
+    public void testDFS() {
+    	Graph graph2 = new Graph();
+    	Vertex<Integer> v1 = new Vertex<Integer>(1);
+		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<Integer> v3 = new Vertex<Integer>(3);
+		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		graph2.addVertex(v1);
+		graph2.addVertex(v2);
+		graph2.addVertex(v3);
+		graph2.addVertex(v4);
+		graph2.addEdge(new Edge(v1, v2));
+		graph2.setWeight(v1, v2, 4f);
+		graph2.addEdge(new Edge(v1, v3));
+		graph2.setWeight(v1, v3, 2f);
+		graph2.addEdge(new Edge(v2, v4));
+		graph2.setWeight(v2, v4, 3f);
+    	assertEquals(GraphManager.dfs(graph2, v1) , "1 - 0  -\n" + "2 - 0 1\n" +
+    												"4 - 1 2\n" +	"3 - 0 1\n");
     	
     }
     
