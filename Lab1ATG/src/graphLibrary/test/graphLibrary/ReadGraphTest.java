@@ -1,6 +1,4 @@
-package graphLibrary.test.graphLibrary;
-
-
+package graphLibrary;
 
 import static org.junit.Assert.*;
 
@@ -10,25 +8,23 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphLibrary.Edge;
-import graphLibrary.Graph;
-import graphLibrary.GraphReader;
-import graphLibrary.Vertex;
-
 public class ReadGraphTest {
-    String basePath = new File("Lab1ATG/src/graphLibrary/data.txt").getAbsolutePath();
+    String basePath = new File("src/graphLibrary/data.txt").getAbsolutePath();
+    //String basePathWeighted = new File("src/graphLibrary/dataWeighted.txt").getAbsolutePath();
     Graph graphRead;
     Graph graphTest;
+    Graph graphReadWeight;
 
     @Before
     public void createGraphs(){
         try {
-            graphRead = GraphReader.readGraph(basePath);
+            graphRead = GraphReader.readGraph(basePath, false);
+            //graphReadWeight = GraphReader.readGraph(basePathWeighted, true);            
         } catch (IOException e) {
             e.printStackTrace();
         }
         
-        graphTest =  new Graph();
+        graphTest =  new Graph(0); 
         
         Vertex<Integer> v1 = new Vertex<Integer>(1);
         Vertex<Integer> v2 = new Vertex<Integer>(2);
@@ -73,12 +69,13 @@ public class ReadGraphTest {
         graphTest.addEdge(edge54);
         
         
+        
      
     }
     
     @Test
     public void TestEqualityGraph() {
-    	assertEquals(graphRead.getEdgeNumber(), graphTest.getEdgeNumber());
+    	assertEquals(graphRead, graphTest);
     	assertNotEquals(graphRead, null);
     	assertNotEquals(graphRead, new Graph());
     	
