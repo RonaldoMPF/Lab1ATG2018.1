@@ -1,5 +1,7 @@
 package graphLibrary;
 
+import java.io.IOException;
+
 public class GraphManager {
 
     Graph graph;
@@ -8,12 +10,23 @@ public class GraphManager {
 
     }
 
-    public void readGraph(String path) {
+    public Graph readGraph(String path) {
+        try {
+            return GraphReader.readGraph(path, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
-    public void readWeightedGraph(String path) {
-
+    public Graph readGraphWeighted(String path) {
+        try {
+            return GraphReader.readGraph(path, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public int getVertexNumber(Graph graph) {
@@ -45,15 +58,11 @@ public class GraphManager {
         return graph.dfs(v);
     }
 
-    public String scc(Graph graph) {
-        return null;
-    }
-
-    public String shortestPath(Vertex v1, Vertex v2) {
-        return null;
+    public String shortestPath(Graph g, Vertex v1, Vertex v2) {
+        return g.shortestPath(v1, v2);
     }
 
     public String mst(Graph graph) {
-        return null;
+        return graph.mst();
     }
 }

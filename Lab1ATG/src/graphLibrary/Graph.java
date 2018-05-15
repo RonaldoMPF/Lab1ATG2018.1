@@ -278,6 +278,7 @@ public class Graph {
 		for (Vertex<Integer> vertex : vertices){
 			setVisitedVertex(vertex, false);
 		}
+
 		return result;
 	}
 
