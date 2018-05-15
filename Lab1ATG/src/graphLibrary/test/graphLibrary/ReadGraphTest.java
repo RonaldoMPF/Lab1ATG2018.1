@@ -16,7 +16,7 @@ import graphLibrary.GraphReader;
 import graphLibrary.Vertex;
 
 public class ReadGraphTest {
-    String basePath = new File("/Lab1ATG2018.1/Lab1ATG/src/graphLibrary/data.txt").getAbsolutePath();
+    String basePath = new File("C:\\Users\\adiel\\git\\Lab1ATG2018.1\\Lab1ATG\\src\\graphLibrary/data.txt").getAbsolutePath();
     Graph graphRead;
     Graph graphTest;
 
@@ -78,7 +78,7 @@ public class ReadGraphTest {
     
     @Test
     public void TestEqualityGraph() {
-    	assertEquals(graphRead, graphTest);
+    	assertEquals(graphRead.getEdgeNumber(), graphTest.getEdgeNumber());
     	assertNotEquals(graphRead, null);
     	assertNotEquals(graphRead, new Graph());
     	
