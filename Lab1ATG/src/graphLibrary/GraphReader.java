@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class GraphReader {
 
-	public static Graph readGraph(String filePath) throws IOException {
+	public static Graph readGraph(String filePath, boolean weighted) throws IOException {
 		Graph graph = null;
 		BufferedReader br = null;
 
@@ -27,26 +27,54 @@ public class GraphReader {
 					break;
 				String[] aux = line.trim().split(" ");
 
-				vertices = Arrays.stream(aux)
-						.mapToInt(Integer::parseInt).toArray();
+				Edge edge1 = null;
+				Edge edge2 = null;
 
-				if (vertices.length != 2) {
-					throw new IOException("Expected two vertices per edge");
+				Vertex<Integer> v1;
+				Vertex<Integer> v2;
+
+				int[] data;
+
+				if(weighted == false) {
+
+					if (aux.length != 2) {
+						throw new IOException("Expected two vertices per edge");
+					}
+
+					data = Arrays.stream(aux)
+							.mapToInt(Integer::parseInt).toArray();
+
+					v1 = new Vertex<Integer>(data[0]);
+					v2 = new Vertex<Integer>(data[1]);
+
+					graph.setWeight(v1, v2, 1f);
+
+					edge1 = new Edge(v1, v2);
+
+
+
+				}else {
+
+					if (aux.length != 3) {
+						throw new IOException("Expected two vertices per edge and weight");
+					}
+
+					Integer v1Value = Integer.parseInt(aux[0]);
+					Integer v2Value = Integer.parseInt(aux[1]);
+					Float  weight = Float.parseFloat((aux[2]));
+
+					v1 = new Vertex<Integer>(v1Value);
+					v2 = new Vertex<Integer>(v2Value);
+
+					edge1 = new Edge(v1, v2, weight);
+
+
+
 				}
 
-				Vertex<Integer> v1 = new Vertex<Integer>(vertices[0]);
-				Vertex<Integer> v2 = new Vertex<Integer>(vertices[1]);
-				
-				graph.setWeight(v1, v2, 1f);
-				
-				graph.addVertex(v1);
-				graph.addVertex(v2);
-				
-				Edge edge1 = new Edge(v1, v2);
-				Edge edge2 = new Edge(v2, v1);
-				
 				graph.addEdge(edge1);
-				graph.addEdge(edge2);
+
+
 			}
 
 
@@ -64,4 +92,5 @@ public class GraphReader {
 
 		return graph;
 	}
+
 }

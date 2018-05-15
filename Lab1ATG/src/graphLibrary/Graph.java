@@ -1,17 +1,11 @@
 package graphLibrary;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class Graph {
 	
 	public static final int DEFAULT_NUMBER_OF_VERTICES = 10;
+	private static final float NOT_CONNECTED = -1f;
 
 	private Set<Vertex<Integer>> vertices;
 	private float[][] matrix;
@@ -32,7 +26,7 @@ public class Graph {
 			
 			for(int j = 1; j <= numberOfVertices; j++) {
 				if(i != j) {
-					matrix[i][j] = Float.MAX_VALUE;					
+					matrix[i][j] = Graph.NOT_CONNECTED;
 				} else {
 					matrix[i][j] = 0;
 				}
@@ -107,7 +101,7 @@ public class Graph {
 	}
 
 
-	public boolean addVertex(Vertex vertex) {
+	private boolean addVertex(Vertex vertex) {
 		
 		if(vertex == null) {
 			return false;
@@ -123,7 +117,7 @@ public class Graph {
 			return false;
 		
 		} else if (edges.add(edge)) {
-			
+			setWeight(edge.getFirstVertice(), edge.getSecondVertice(), edge.getWeight());
 			if(edge.getWeight() != 1){
 				isWeighted = true;
 			}
@@ -273,7 +267,7 @@ public class Graph {
 		String result = "";
 
 		setVisitedVertex(v, true);
-		result += v.getData()+" - "+level+" "+" -\n";
+		result += v.getData()+" - "+level+" "+"-\n";
 
 		for(Vertex<Integer> vertex: getAdjVertices(v)){
 			if (!getVertex((Integer) vertex.getData()).getVisited()){
@@ -350,7 +344,7 @@ public class Graph {
 	}
 	
 	public String shortestPath(Vertex<Integer> origin, Vertex<Integer> destiny) {
-		
+
 		float[] dist = new float[vertices.size() + 1];
 		int[] parent = new int[vertices.size() + 1];
 		Queue<Vertex<Integer>> fifo = new LinkedList<Vertex<Integer>>();
@@ -392,6 +386,43 @@ public class Graph {
 			result += s.pop().toString() + " ";
 		}
 		
+		return result;
+	}
+
+	public boolean connected(){
+		String str = bfs(vertices.iterator().next());
+		List<String> bfs = Arrays.asList(str.split("\\s*\n\\s*"));
+		return  (bfs.size() == getVertexNumber());
+	}
+
+	public String mst(){
+
+		String result = "Nao conectado!";
+		if (connected()) {
+			Queue<Edge> ordEdges = new LinkedList<>();
+			List<Vertex> addedVertex = new LinkedList<>();
+			((LinkedList<Edge>) ordEdges).addAll(edges);
+			((LinkedList<Edge>) ordEdges).sort(Edge::compareTo);
+			Edge actual;
+			result = "";
+
+			while (!ordEdges.isEmpty()) {
+				actual = ((LinkedList<Edge>) ordEdges).pop();
+				if(!addedVertex.contains(actual.getFirstVertice()) && !addedVertex.contains(actual.getSecondVertice())){
+					addedVertex.add(actual.getFirstVertice());
+					addedVertex.add(actual.getSecondVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}else if (!addedVertex.contains(actual.getFirstVertice())){
+					addedVertex.add(actual.getFirstVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}else if (!addedVertex.contains(actual.getSecondVertice())){
+					addedVertex.add(actual.getSecondVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}
+
+			}
+		}
+
 		return result;
 	}
 
