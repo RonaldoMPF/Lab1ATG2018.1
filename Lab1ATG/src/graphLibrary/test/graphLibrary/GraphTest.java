@@ -4,6 +4,8 @@ package graphLibrary.test.graphLibrary;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,8 @@ import org.junit.Test;
 import graphLibrary.Edge;
 import graphLibrary.Graph;
 import graphLibrary.GraphManager;
+import graphLibrary.GraphReader;
+import graphLibrary.Representation;
 import graphLibrary.Vertex;
 
 public class GraphTest {
@@ -227,6 +231,27 @@ public class GraphTest {
     												"4 - 1 2\n" +	"3 - 0 1\n");
     	
     }
+    
+    @Test
+    public void testAmRepresetation() {
+    	String basePath = new File("Lab1ATG/src/graphLibrary/data.txt").getAbsolutePath();
+		Graph graph;
+		
+		
+		try {
+			graph = GraphReader.readGraph(basePath);
+    	assertEquals(graph.graphRepresentation(Representation.AM) , "  1 2 3 4 5 \n" + 
+    			"1 0 1 0 0 1 \n" + 
+    			"2 1 0 0 0 1 \n" + 
+    			"3 0 0 0 0 1 \n" + 
+    			"4 0 0 0 0 1 \n" + 
+    			"5 1 1 1 1 0 \n");
+    	} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    	
+    }
+    
     
 
 
