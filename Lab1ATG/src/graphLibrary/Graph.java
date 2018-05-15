@@ -179,7 +179,7 @@ public class Graph {
 		String result = "";
 
 		setVisitedVertex(v, true);
-		result += v.getData()+" - "+level+" "+" -\n";
+		result += v.getData()+" - "+level+" "+"-\n";
 
 		for(Vertex vertex: getAdjVertices(v)){
 			if (!getVertex((Integer) vertex.getData()).getVisited()){
@@ -256,7 +256,9 @@ public class Graph {
 	}
 
 	public boolean connected(){
-		return true;
+		String str = bfs(vertices.iterator().next());
+		List<String> bfs = Arrays.asList(str.split("\\s*\n\\s*"));
+		return  (bfs.size() == getVertexNumber());
 	}
 
 	public String mst(){
