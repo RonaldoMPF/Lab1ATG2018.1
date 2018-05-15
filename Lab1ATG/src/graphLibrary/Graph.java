@@ -36,8 +36,8 @@ public class Graph {
 		edges = new HashSet<>();
 		adjVertices = new HashMap<>();
 		isWeighted = false;
-		
-		
+
+
 	}
 
 	public Vertex getVertex(Integer data){
@@ -55,9 +55,6 @@ public class Graph {
 		return null;
 	}
 	
-	public void setVertices(Set<Vertex<Integer>> vertices) {
-		this.vertices = vertices;
-	}
 
 	public boolean isWeighted() {
 		return isWeighted;
@@ -81,10 +78,6 @@ public class Graph {
 		return getVertices().size();
 	}
 	
-	public float[][] getMatrix() {
-		return matrix;
-	}
-	
 	public void setWeight(Vertex<Integer> u, Vertex<Integer> v, float weight) {
 		matrix[u.getData()][v.getData()] = weight;
 		matrix[v.getData()][u.getData()] = weight;
@@ -102,7 +95,7 @@ public class Graph {
 
 
 	private boolean addVertex(Vertex vertex) {
-		
+
 		if(vertex == null) {
 			return false;
 		}else {
@@ -278,7 +271,6 @@ public class Graph {
 		for (Vertex<Integer> vertex : vertices){
 			setVisitedVertex(vertex, false);
 		}
-
 		return result;
 	}
 
