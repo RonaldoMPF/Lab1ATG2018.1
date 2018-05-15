@@ -31,11 +31,14 @@ public class Main {
 		graph2.addVertex(v2);
 		graph2.addVertex(v3);
 		graph2.addVertex(v4);
-		graph2.addEdge(new Edge(v1, v2));
-		graph2.addEdge(new Edge(v1, v3));
-		graph2.addEdge(new Edge(v2, v4));
+		graph2.addEdge(new Edge(v1, v2, (float) 10.0));
+		graph2.addEdge(new Edge(v1, v3, (float) 2.0));
+		graph2.addEdge(new Edge(v2, v4, (float) 3.0));
+		graph2.addEdge(new Edge(v2, v3, (float) 1.0));
+		graph2.addEdge(new Edge(v4, v3, (float) 1.5));
 		System.out.println(graph2.bfs(v1));
 		System.out.println("DFS\n"+GraphManager.dfs(graph2, v1));
+		System.out.println("MST:\n"+graph2.mst());
 //
 //		System.out.println(graph2.graphRepresentation(Representation.AL));
 	}

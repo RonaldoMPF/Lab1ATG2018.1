@@ -255,4 +255,37 @@ public class Graph {
 		return result;
 	}
 
+	public boolean connected(){
+		return true;
+	}
+
+	public String mst(){
+		String result = "Nao conectado!";
+		if (connected()) {
+			Queue<Edge> ordEdges = new LinkedList<>();
+			List<Vertex> addedVertex = new LinkedList<>();
+			((LinkedList<Edge>) ordEdges).addAll(edges);
+			((LinkedList<Edge>) ordEdges).sort(Edge::compareTo);
+			Edge actual;
+			result = "";
+
+			while (!ordEdges.isEmpty()) {
+				actual = ((LinkedList<Edge>) ordEdges).pop();
+				if(!addedVertex.contains(actual.getFirstVertice()) && !addedVertex.contains(actual.getSecondVertice())){
+					addedVertex.add(actual.getFirstVertice());
+					addedVertex.add(actual.getSecondVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}else if (!addedVertex.contains(actual.getFirstVertice())){
+					addedVertex.add(actual.getFirstVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}else if (!addedVertex.contains(actual.getSecondVertice())){
+					addedVertex.add(actual.getSecondVertice());
+					result += "Edge: "+actual.getFirstVertice().getData()+" to "+actual.getSecondVertice().getData()+", weigh: "+actual.getWeight()+"\n";
+				}
+
+			}
+		}
+		return result;
+	}
+
 }

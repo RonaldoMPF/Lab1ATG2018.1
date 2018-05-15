@@ -1,6 +1,8 @@
 package graphLibrary;
 
-public class Edge {
+import java.util.Comparator;
+
+public class Edge implements Comparable<Edge>{
 
 	public static final Float DEFAULT_WEIGHT = 1f;
 
@@ -39,4 +41,8 @@ public class Edge {
 		this.weight = weight;
 	}
 
+	@Override
+	public int compareTo(Edge o) {
+		return this.weight.compareTo(o.getWeight());
+	}
 }
