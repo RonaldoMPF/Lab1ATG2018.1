@@ -1,7 +1,8 @@
+package graphLibrary.test.graphLibrary;
 
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import graphLibrary.GraphReader;
 import graphLibrary.Vertex;
 
 public class ReadGraphTest {
-    String basePath = new File("src/graphLibrary/data.txt").getAbsolutePath();
+    String basePath = new File("/Lab1ATG2018.1/Lab1ATG/src/graphLibrary/data.txt").getAbsolutePath();
     Graph graphRead;
     Graph graphTest;
 

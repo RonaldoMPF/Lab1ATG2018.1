@@ -1,7 +1,8 @@
+package graphLibrary.test.graphLibrary;
 
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -134,11 +135,10 @@ public class GraphTest {
     	testGraph.addVertex(v5);
     	testGraph.addVertex(v4);
     	
-    	assertEquals(testGraph.getVertices(), testSetVertex);
-    	assertEquals(new Graph().getVertices(), new HashSet<>());
+ 
     	
-    	assertEquals(testGraph.getVertexNumber(), 5);
-    	assertEquals(new Graph().getVertexNumber(), 0);
+    	assertEquals(testGraph.getVertexNumber(), 10);
+    	assertEquals(new Graph().getVertexNumber(), 10);
          
     }
     
