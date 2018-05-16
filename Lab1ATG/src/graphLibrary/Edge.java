@@ -8,6 +8,14 @@ public class Edge implements Comparable<Edge>{
 	private Vertex v;
 	private Float weight;
 
+	/**
+	 * This class represents a Edge used for a graph to link two vertices
+	 *
+	 * @author Ronan
+	 * @param u The first vertex that will be linked for this edge
+	 * @param v The second vertex that will be linked for this edge
+	 * @param weight The weight of this edge
+	 */
 	public Edge(Vertex u, Vertex v, Float weight) {
 		this.u = u;
 		this.v = v;
@@ -23,22 +31,40 @@ public class Edge implements Comparable<Edge>{
 		this(u, v, null);
 	}
 
+	/** Returns one of the vertices of this edge
+	 * @return a vertex object
+	 */
 	public Vertex getFirstVertice() {
 		return u;
 	}
 
+	/** Returns one of the vertices of this edge
+	 * @return a vertex object
+	 */
 	public Vertex getSecondVertice() {
 		return v;
 	}
 
+	/**
+	 * Returns the weight of this graph
+	 * @return a float representing the weight
+	 */
 	public Float getWeight() {
 		return weight;
 	}
 
+
+	/** Sets a new value for this edge's weight
+	 * @param weight the new value of the edge's weight
+	 */
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 
+
+	/** Generates a unique value to represents this edge
+	 * @return a int representing the hashcode
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -49,6 +75,11 @@ public class Edge implements Comparable<Edge>{
 		return result;
 	}
 
+	/**
+	 * Indicates of this edge is equals to the object passed as a parameter
+	 * @param obj the object to be compared
+	 * @return true if both are idential and false if it's not
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,6 +107,12 @@ public class Edge implements Comparable<Edge>{
 		return true;
 	}
 
+	/**
+	 * Compare to edges to see which one has the major weight
+	 * @param o the edge to be compared to this one
+	 * @return a negative integer, zero, or a positive integer as this object
+	 *         is less than, equal to, or greater than the specified object.
+	 */
 	@Override
 	public int compareTo(Edge o) {
 		return this.weight.compareTo(o.getWeight());

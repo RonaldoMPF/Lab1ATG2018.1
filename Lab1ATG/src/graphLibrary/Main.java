@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) {
-		String basePath = new File("Lab1ATG/src/graphLibrary/data.txt").getAbsolutePath();
+		String basePath = new File("src/graphLibrary/data.txt").getAbsolutePath();
 		Graph graph;
 
 		try {

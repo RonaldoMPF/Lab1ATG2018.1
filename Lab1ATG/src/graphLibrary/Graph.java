@@ -16,7 +16,14 @@ public class Graph {
 	public Graph() {
 		this(Graph.DEFAULT_NUMBER_OF_VERTICES);
 	}
-	
+
+	/** This is a Graph Structure, where each Graph has a set of vertices, a set for edges, a boolean
+	 * to define if this graph is weighted or not (all edges has a default weigh), a map where the keys are all
+	 * vertices of this graph, and the values are sets of adjacent vertices.
+	 *
+	 * @author Ronan
+	 * @param numberOfVertices it`s the number of vertices that this graph will have
+	 */
 	public Graph(int numberOfVertices) {
 		vertices = new HashSet<>(numberOfVertices);
 		matrix = new float[numberOfVertices + 1][numberOfVertices + 1];
@@ -40,6 +47,12 @@ public class Graph {
 
 	}
 
+	/**
+	 * Returns a vertex corresponding to the parameter passed
+	 *
+	 * @param data it`s the data of vertex wanted
+	 * @return The vertex corresponding to the data that was passed
+	 */
 	public Vertex getVertex(Integer data){
 		
 		if(data == null) {
@@ -54,8 +67,12 @@ public class Graph {
 		
 		return null;
 	}
-	
 
+
+	/**
+	 * Indicates if the graph is weighted or not
+	 * @return true, if the graph is weighted of false if it`s not
+	 */
 	public boolean isWeighted() {
 		return isWeighted;
 	}
@@ -68,27 +85,57 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * Returns all vertices of this graph
+	 * @return a set with all vertices
+	 */
 	public Set<Vertex<Integer>> getVertices() { return vertices; }
 
+	/**
+	 * Returns all the adjacents vertices of a vertex
+	 * @param v The vertex that you want the adjacents
+	 * @return A set of vertices
+	 */
 	public Set<Vertex<Integer>> getAdjVertices(Vertex<Integer> v) { return adjVertices.get(v); }
 
+	/**
+	 * Returns all edges of this graph
+	 * @return a set of edges
+	 */
 	public Set<Edge> getEdges() { return edges; }
 
+	/**
+	 * Indicates how many vertices this graph has
+	 * @return the number (int) of vertices in this graph
+	 */
 	public int getVertexNumber() {
 		return getVertices().size();
 	}
-	
+
+	/**
+	 * Sets a edge between two vertices
+	 * @param u the first vertex
+	 * @param v the second vertex
+	 * @param weight the weight of the edge
+	 */
 	public void setWeight(Vertex<Integer> u, Vertex<Integer> v, float weight) {
 		matrix[u.getData()][v.getData()] = weight;
 		matrix[v.getData()][u.getData()] = weight;
 	}
 
+	/** Indicates how many edges this graph has
+	 * @return a int with the number of edges
+	 */
 	public int getEdgeNumber() {
 
 		return getEdges().size();
 	}
 
-	
+
+	/**
+	 * Indicates the mean edge value of this graph, using the following formula: (2 * edgesNumber) / verticesNumber
+	 * @return a float of the mean edge
+	 */
 	public float getMeanEdge() {
 		return (2 * getEdgeNumber()) / getVertexNumber();
 	}
@@ -105,6 +152,11 @@ public class Graph {
 	}
 
 
+	/**
+	 * Adds a new edge to the graph
+	 * @param edge the edge that is wanted to be added
+	 * @return true if the edge was added successfully, or false if it's not
+	 */
 	public boolean addEdge(Edge edge) {
 		if(edge == null) {
 			return false;
@@ -130,6 +182,10 @@ public class Graph {
 
 	}
 
+	/**
+	 * Creates a unique number for this graph
+	 * @return the hash code of this graph
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -140,6 +196,12 @@ public class Graph {
 		return result;
 	}
 
+
+	/**
+	 * Verify if this graph is equals to other object
+	 * @param obj the object to be compared with this graph
+	 * @return true if this graph and the obj are identicals, and false if it's not
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -164,6 +226,11 @@ public class Graph {
 		return true;
 	}
 
+	/**
+	 * Returns a representation of this graph, that could be a Adjacency List or a Adjacency Matrix
+	 * @param type the type of your representation (AM or AL)
+	 * @return A string of the wanted representation
+	 */
 	public String graphRepresentation(Representation type) {
 		String result = null;
 
@@ -335,7 +402,13 @@ public class Graph {
 
 		return result;
 	}
-	
+
+	/**
+	 * Generates the shortest path between two vertices of this graph, it was used Djkistra Algorithm to find the path
+	 * @param origin the origin vertex
+	 * @param destiny the final vertex
+	 * @return A string representing the path (all vertices between them)
+	 */
 	public String shortestPath(Vertex<Integer> origin, Vertex<Integer> destiny) {
 
 		float[] dist = new float[vertices.size() + 1];
@@ -382,12 +455,21 @@ public class Graph {
 		return result;
 	}
 
+
+	/** Indicates if this graph is connected(you can have a path between any two vertices)
+	 * @return true, if it's connected and false if it's not
+	 */
 	public boolean connected(){
 		String str = bfs(vertices.iterator().next());
 		List<String> bfs = Arrays.asList(str.split("\\s*\n\\s*"));
 		return  (bfs.size() == getVertexNumber());
 	}
 
+
+	/**
+	 * Generates the Minimum Spanning Tree of this graph, it was used the Kruskal algorithm to calculate it
+	 * @return A string with each edge of the tree
+	 */
 	public String mst(){
 
 		String result = "Nao conectado!";
